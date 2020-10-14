@@ -1,0 +1,1 @@
+# content_agregate_django
