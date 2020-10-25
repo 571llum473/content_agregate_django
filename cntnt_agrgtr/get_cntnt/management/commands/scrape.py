@@ -23,4 +23,4 @@ class Command(BaseCommand):
                 except: 
                     print('%s already exists' % (news_text,))
 
-            self.stdout.write( 'scrape complete' )
+        self.stdout.write( 'scrape complete' )
