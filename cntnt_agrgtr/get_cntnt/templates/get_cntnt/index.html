@@ -1,0 +1,17 @@
+{% if latest_news %}
+
+    <div>
+    {% for source, news in latest_news.items %}
+        <div>
+        <h2>{{ source.name }}</h2>
+            <ul>
+                {% for new in news %}
+                <li><a href="{{ new.url }}">{{ new.news_text }}</a><span class="newsdate">{{ new.pub_time|time }}</span></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+    <p>На данный момент нет новостей.</p>
+{% endif %}
