@@ -17,8 +17,13 @@ class Command(BaseCommand):
                 url = tag.link.text
                 news_text = tag.title.text
                 pub_time = tag.pubDate.text.split(' ')[-2]
+                snippet = tag.description.text
                 try:
-                    source_object.news_set.create(news_text=news_text, url=url, pub_time=pub_time)
+                    source_object.news_set.create(
+                        news_text=news_text, 
+                        pub_time=pub_time, 
+                        snippet=snippet, 
+                        url=url)
                     print('%s added' % (news_text,))
                 except: 
                     print('%s already exists' % (news_text,))
