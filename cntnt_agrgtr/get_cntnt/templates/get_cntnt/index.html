@@ -8,7 +8,7 @@
             <li><a href="{% url 'get_cntnt:index' %}">Главная</a></li>
             {% if CAT_CHOICES %}
                 {% for name, desc in CAT_CHOICES.items %}
-                    <li><a href="{% url 'get_cntnt:/'|add:name %}">{{ desc }}</a></li>
+                    <li><a href="{% url 'get_cntnt:cat' name %}">{{ desc }}</a></li>
                 {% endfor %}
             {% endif %}
         </ul>
