@@ -1,3 +1,19 @@
+<head>
+    <title>Cntnt_agrgtr</title>
+</head>
+<body>
+<header>
+    <nav role="main-navigation">
+        <ul>
+            <li><a href="{% url 'get_cntnt:index' %}">Главная</a></li>
+            {% if CAT_CHOICES %}
+                {% for name, desc in CAT_CHOICES.items %}
+                    <li><a href="{% url 'get_cntnt:/'|add:name %}">{{ desc }}</a></li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </nav>
+</header>
 {% if latest_news %}
 
     <div>
@@ -15,3 +31,5 @@
 {% else %}
     <p>На данный момент нет новостей.</p>
 {% endif %}
+
+</body>
