@@ -1,9 +1,13 @@
 <head>
     <title>Cntnt_agrgtr</title>
+    {% load static %}
+    <link rel="stylesheet" href = "{% static 'font/font-faces.css' %}"></link>
+    <link rel="stylesheet" href = "{% static 'get_cntnt/style.css' %}"></link>
 </head>
 <body>
 <header>
-    <nav role="main-navigation">
+    <nav role="main-navigation" id = "main-nav">
+        <div><img scr = {% static "get_cntnt/logo.png" %}></div>
         <ul>
             <li><a href="{% url 'get_cntnt:index' %}">Главная</a></li>
             {% if CAT_CHOICES %}
@@ -16,13 +20,13 @@
 </header>
 {% if latest_news %}
 
-    <div>
+    <div class = 'main'>
     {% for source, news in latest_news.items %}
-        <div>
-        <h2>{{ source.name }}</h2>
+        <div class="news-block">
+        <h2><a href="source.url">{{ source.name }}</a></h2>
             <ul>
                 {% for new in news %}
-                <li><a href="{{ new.url }}">{{ new.news_text }}</a><span class="newsdate">{{ new.pub_time|time }}</span></li>
+                <li class = "news-text"><a href="{{ new.url }}">{{ new.news_text }}</a><span class="newsdate">{{ new.pub_time|time }}</span></li>
                 {% endfor %}
             </ul>
         </div>
