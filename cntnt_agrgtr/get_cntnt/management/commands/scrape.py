@@ -12,12 +12,17 @@ class Command(BaseCommand):
             r = requests.get(news_url)
             soup = BeautifulSoup(r.content, 'xml')
             items = soup.find_all("item", limit=5)
-
             for tag in items:
                 url = tag.link.text
                 news_text = tag.title.text
                 pub_time = tag.pubDate.text.split(' ')[-2]
-                snippet = tag.description.text
+                try:
+                    snippet = tag.description.text.lstrip()
+                    if snippet.startswith("<"):
+                        parse_html = BeautifulSoup(snippet, 'html.parser')
+                        snippet = parse_html.text
+                except:
+                    snippet = False
                 try:
                     source_object.news_set.create(
                         news_text=news_text, 
