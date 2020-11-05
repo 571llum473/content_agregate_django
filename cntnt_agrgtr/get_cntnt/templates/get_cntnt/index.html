@@ -26,7 +26,8 @@
         <h2><a href="source.url">{{ source.name }}</a></h2>
             <ul>
                 {% for new in news %}
-                <li class = "news-text"><a href="{{ new.url }}">{{ new.news_text }}</a><span class="newsdate">{{ new.pub_time|time }}</span></li>
+                <li class = "news-text"><a href="{{ new.url }}">{{ new.news_text }}</a><span class="newsdate">{{ new.pub_time|time }}</span>
+                <div class = "snippet">{{ news.snippet }}</div></li>
                 {% endfor %}
             </ul>
         </div>
