@@ -1,12 +1,14 @@
+
+from cntnt_agrgtr.celery import app
 from django.core.management.base import BaseCommand
 from get_cntnt.models import Source, News
 from bs4 import BeautifulSoup
 import requests
-
-class Command(BaseCommand):
-    help = "scrape news"
-    def handle(self, *args, **options):
-        for source_name in Source.objects.all():
+ 
+ 
+@app.task
+def scrape():
+    for source_name in Source.objects.all():
             source_object = Source.objects.get(name=source_name)
             news_url = source_object.url
             r = requests.get(news_url)
@@ -27,4 +29,4 @@ class Command(BaseCommand):
                     print('%s added' % (news_text,))
                 except: 
                     print('%s already exists' % (news_text,))
-        self.stdout.write('scrape complete')
+        
