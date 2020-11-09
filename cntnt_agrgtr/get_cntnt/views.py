@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from .models import Source
+from django.contrib.auth.forms import UserCreationForm
+from .forms import RegisterForm
 
 # Create your views here.
 def index(request, cat=None):
@@ -16,3 +18,16 @@ def index(request, cat=None):
         'CAT_CHOICES' : cat_choices
     }
     return render(request, 'get_cntnt/index.html', context)
+
+def register(request):
+    form = RegisterForm()
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+    context = {"form":form}
+    return render(request, 'registration/register.html', context)
+
+def login(request):
+    context = {}
+    return render(request, "registration/login.html", context)

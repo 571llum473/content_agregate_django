@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Source(models.Model):
@@ -33,3 +34,7 @@ class News(models.Model):
     url = models.URLField(max_length=200, unique=True)
     def __str__(self):
         return self.news_text
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
