@@ -15,6 +15,12 @@
                     <li><a href="{% url 'get_cntnt:cat' name %}">{{ desc }}</a></li>
                 {% endfor %}
             {% endif %}
+            {% if user.is_authenticated %}
+                <li><a href="{%url 'get_cntnt:logout'%}">Выйти</a></li>
+            {% else %}
+                <li><a href="{% url 'get_cntnt:login' %}">Войти</a></li>
+                <li><a href="{% url 'get_cntnt:register' %}">Регистрация</a></li>
+            {% endif %}
         </ul>
     </nav>
 </header>

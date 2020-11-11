@@ -1,0 +1,10 @@
+<form method="POST" action="">
+    {% csrf_token %}
+    <p><input type="text" name="username"></p>
+    <p><input type="password" name="password"></p>
+    <input type="submit">
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+</form>
+<p><a href="{% url 'get_cntnt:register' %}">sign up</a></p>
