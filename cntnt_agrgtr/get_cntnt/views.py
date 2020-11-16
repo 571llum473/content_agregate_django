@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.template import loader
-from .models import Source
+from .models import Source, Profile
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterForm
 from django.contrib.auth import login, authenticate, logout
@@ -68,5 +68,19 @@ def logoutUser(request):
     return redirect('get_cntnt:index')
 
 def profile(request):
-    context = {}
-    return render(request, 'get_cntnt/publications.html', context)
+    if request.user.is_authenticated:
+        current_user = request.user
+        profile = Profile.objects.get(user__username=current_user)
+        sources = profile.love_list
+        context = {"lovelist" : sources}
+        return render(request, 'get_cntnt/profile.html', context)
+    else:
+        return redirect('get_cntnt:index')
+
+def add_to_lovelist(request):
+    source_id = request.POST.get('source_id')
+    current_user = request.user
+    profile = Profile.objects.get(user__username=current_user)
+    source = Source.objects.get(id = source_id)
+    profile.love_list.add(source)
+    return(HttpResponse('succes'))
