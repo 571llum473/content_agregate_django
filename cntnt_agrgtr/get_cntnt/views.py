@@ -67,6 +67,6 @@ def logoutUser(request):
     logout(request)
     return redirect('get_cntnt:index')
 
-def publications(request):
+def profile(request):
     context = {}
     return render(request, 'get_cntnt/publications.html', context)
