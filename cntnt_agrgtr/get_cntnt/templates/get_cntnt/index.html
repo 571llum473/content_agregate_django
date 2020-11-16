@@ -7,8 +7,12 @@
 <body>
 <header>
     <nav role="main-navigation" id = "main-nav">
-        <div><img scr = {% static "get_cntnt/logo.png" %}></div>
+        <div><img scr = {% static 'get_cntnt/logo.png' %}></div>
         <ul>
+            <form action="{% url 'get_cntnt:index' %}">
+                <input type="search" name="search">
+                <button type="submit">Search</button>
+            </form>
             <li><a href="{% url 'get_cntnt:index' %}">Главная</a></li>
             {% if CAT_CHOICES %}
                 {% for name, desc in CAT_CHOICES.items %}
@@ -17,6 +21,7 @@
             {% endif %}
             {% if user.is_authenticated %}
                 <li><a href="{%url 'get_cntnt:logout'%}">Выйти</a></li>
+                <li><a href="{%url 'get_cntnt:favourite'%}">Вы подписаны</a></li>
             {% else %}
                 <li><a href="{% url 'get_cntnt:login' %}">Войти</a></li>
                 <li><a href="{% url 'get_cntnt:register' %}">Регистрация</a></li>
@@ -29,7 +34,7 @@
     <div class = 'main'>
     {% for source, news in latest_news.items %}
         <div class="news-block">
-        <h2><a href="source.url">{{ source.name }}</a></h2>
+        <h2><a href="{{ source.url }}">{{ source.name }}</a></h2>
             <ul>
                 {% for new in news %}
                 <li class = "news-text"><a href="{{ new.url }}">{{ new.news_text }}</a><span class="newsdate">{{ new.pub_time|time }}</span>

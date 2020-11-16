@@ -13,6 +13,13 @@ def index(request, cat=None):
         sources = Source.objects.filter(category=cat)
     else:
         sources = Source.objects.all()
+
+    search_querry = request.GET.get('search', '')
+    if search_querry:
+        sources = Source.objects.filter(name__icontains=search_querry)
+    else:
+        sources = Source.objects.all()
+        
     latest_news = {i : i.news_set.order_by('-pub_time')[:5] for i in sources}
     cat_choices = {i[0] : i[1] for i in Source.CAT_CHOICES}
     context = {
@@ -59,3 +66,7 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('get_cntnt:index')
+
+def publications(request):
+    context = {}
+    return render(request, 'get_cntnt/publications.html', context)

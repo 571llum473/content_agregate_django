@@ -1,0 +1,7 @@
+<h3>Введите новый пароль</h3>
+
+<form method="post">
+    {% csrf_token %}
+    {{form}}
+    <input name="Обновить пароль" type="submit">
+</form>
