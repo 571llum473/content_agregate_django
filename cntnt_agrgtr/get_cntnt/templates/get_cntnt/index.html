@@ -3,8 +3,33 @@
     {% load static %}
     <link rel="stylesheet" href = "{% static 'font/font-faces.css' %}"></link>
     <link rel="stylesheet" href = "{% static 'get_cntnt/style.css' %}"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+{% csrf_token %}
+<script>
+    jQuery(document).ready(function(){
+        const csrftoken = jQuery('[name=csrfmiddlewaretoken]').val()
+        jQuery('.add_to_lovelist_btn').click(function(e){
+            e.preventDefault();
+            source_id = jQuery(this).data('id')
+            jQuery.ajax({
+                beforeSend: function(xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                },
+                url:"{% url 'get_cntnt:addtolovelist' %}",
+                data: {"source_id" : source_id},
+                type:"post",
+                success: function(data){
+                    alert(data)
+                },
+                failure: function(data) { 
+                    alert('Got an error dude');
+                }
+            })
+        })
+    });
+</script>
 <header>
     <nav role="main-navigation" id = "main-nav">
         <div><img scr = {% static 'get_cntnt/logo.png' %}></div>
@@ -34,7 +59,7 @@
     <div class = 'main'>
     {% for source, news in latest_news.items %}
         <div class="news-block">
-        <h2><a href="{{ source.url }}">{{ source.name }}</a></h2>
+        <h2><a href="{{ source.url }}">{{ source.name }}</a></h2><span class = "add_to_lovelist_btn" data-id = "{{ source.id }}">Add to love list</span>
             <ul>
                 {% for new in news %}
                 <li class = "news-text"><a href="{{ new.url }}">{{ new.news_text }}</a><span class="newsdate">{{ new.pub_time|time }}</span>

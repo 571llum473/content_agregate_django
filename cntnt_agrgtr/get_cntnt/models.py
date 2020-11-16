@@ -1,12 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 # Create your models here.
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email = models.CharField(max_length=200, null=True)
-
 class Source(models.Model):
     name = models.CharField(max_length=200)
     url = models.URLField(max_length=200)
@@ -39,3 +36,15 @@ class News(models.Model):
     def __str__(self):
         return self.news_text
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.CharField(max_length=200, null=True)
+    love_list = models.ManyToManyField(Source)
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()

@@ -74,3 +74,9 @@ a{
 a:hover{
     text-decoration: underline;
 }
+.add_to_lovelist_btn{
+    cursor: pointer;
+}
+.add_to_lovelist_btn:hover{
+    text-decoration: underline;
+}
