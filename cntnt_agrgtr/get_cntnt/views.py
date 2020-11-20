@@ -88,7 +88,14 @@ def add_to_lovelist(request):
 
 def profile(request):
     user = request.user
-    context = {"user" : user}
+    form = ChangeProfileForm(instance=user)
+    if request.method == 'POST':
+        form = ChangeProfileForm(instance=user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('get_cntnt:profile')
+    context = {"user" : user,
+        'form':form}
     return render(request, 'get_cntnt/profile.html', context)
 
 def profile_change(request):

@@ -77,3 +77,10 @@ a:hover{
 .add_to_lovelist_btn:hover{
     text-decoration: underline;
 }
+input[name = "username"], input[name="email"]{
+    display: none;
+}
+.email, .username{
+    cursor:pointer;
+    text-decoration: underline;
+}
