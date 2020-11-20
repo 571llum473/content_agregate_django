@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.template import loader
 from .models import Source, Profile
-from django.contrib.auth.forms import UserCreationForm
-from .forms import RegisterForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from .forms import RegisterForm, ChangeProfileForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-
+from django.contrib.auth.models import User
+from django.contrib.auth import update_session_auth_hash
 # Create your views here.
 def index(request, cat=None):
     if cat:
@@ -45,6 +46,7 @@ def registerPage(request):
     context = {"form":form}
     return render(request, 'get_cntnt/register.html', context)
 
+
 def loginPage(request):
     if request.user.is_authenticated:
         return redirect('get_cntnt:index')
@@ -53,7 +55,6 @@ def loginPage(request):
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
             login(request, user)
             return redirect('get_cntnt:index')
@@ -67,13 +68,13 @@ def logoutUser(request):
     logout(request)
     return redirect('get_cntnt:index')
 
-def profile(request):
+def favourite(request):
     if request.user.is_authenticated:
         current_user = request.user
         profile = Profile.objects.get(user__username=current_user)
         sources = profile.love_list
         context = {"lovelist" : sources}
-        return render(request, 'get_cntnt/profile.html', context)
+        return render(request, 'get_cntnt/favourite.html', context)
     else:
         return redirect('get_cntnt:index')
 
@@ -84,3 +85,36 @@ def add_to_lovelist(request):
     source = Source.objects.get(id = source_id)
     profile.love_list.add(source)
     return(HttpResponse('succes'))
+
+def profile(request):
+    user = request.user
+    context = {"user" : user}
+    return render(request, 'get_cntnt/profile.html', context)
+
+def profile_change(request):
+    user = request.user
+    form = ChangeProfileForm(instance=user)
+    if request.method == 'POST':
+        form = ChangeProfileForm(instance=user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated!')
+            return redirect('get_cntnt:profile')
+
+    context = {'form':form}
+    return render(request, 'get_cntnt/profile_change.html', context)
+
+def change_password(request):
+    user = request.user
+    form = PasswordChangeForm(user=user)
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('get_cntnt:change_password_done')
+    context = {"form":form}
+    return render(request, 'get_cntnt/change_password.html', context)
+
+def change_password_done(request):
+    return HttpResponse('<h1>Chnage password done</h1>')

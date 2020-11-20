@@ -1,5 +1,4 @@
-<ul>
-    {% for i in lovelist.all %}
-        <li>{{ i.name }}</li>
-    {% endfor %}
-</li>
+<h2>Profile</h2>
+<p>User {{ user }}</p>
+<p>Email {{ user.email }}</p>
+<p>Password <a href="{% url 'get_cntnt:change_password' %}">change</a></p>
