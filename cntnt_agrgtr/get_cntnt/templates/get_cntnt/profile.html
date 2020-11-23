@@ -1,8 +1,4 @@
 <h2>Profile</h2>
-<p>User {{ user }}</p>
-<p>Email {{ user.email }}</p>
-<p>Password <a href="{% url 'password_change' %}">change</a></p>
-=======
 <head>
     <title>Cntnt_agrgtr</title>
     {% load static %}
@@ -14,7 +10,7 @@
     {% csrf_token %}
     <p class = "user-label">User <span class = "username">{{ user }}</span>{{ form.username }}</p>
     <p class = "email-label">Email <span class = "email">{{ user.email }}</span>{{ form.email }}</p>
-    <p>Password <a href="{% url 'get_cntnt:change_password' %}">change</a></p>
+    <p>Password <a href="{% url 'password_change' %}">change</a></p>
     <input type="submit">
 </form>
 <script>

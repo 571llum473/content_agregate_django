@@ -88,7 +88,7 @@ def profile(request):
         form = ChangeProfileForm(instance=user, data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('get_cntnt:profile')
+            return redirect('profile')
     context = {"user" : user,
         'form':form}
     return render(request, 'get_cntnt/profile.html', context)
