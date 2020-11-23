@@ -1,13 +1,12 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.template import loader
-from .models import Source, Profile
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from .forms import RegisterForm, ChangeProfileForm
-from django.contrib.auth import login, authenticate, logout
-from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from .models import Source, Profile
+from .forms import RegisterForm, ChangeProfileForm
+
 # Create your views here.
 def index(request):
     sources = Source.objects.all()
@@ -16,14 +15,13 @@ def index(request):
         sources = Source.objects.filter(name__icontains=search_querry)
     else:
         sources = Source.objects.all()
-        
     latest_news = {i : i.news_set.order_by('-pub_time')[:5] for i in sources}
     cat_choices = {i[0] : i[1] for i in Source.CAT_CHOICES}
     context = {
         'latest_news' : latest_news,
         'CAT_CHOICES' : cat_choices
     }
-    return render(request, 'get_cntnt/index.html', context)
+    return render(request, 'get_cntnt/home.html', context)
 
 def category(request, cat):
     sources = Source.objects.filter(category=cat)
@@ -33,12 +31,12 @@ def category(request, cat):
         'latest_news' : latest_news,
         'CAT_CHOICES' : cat_choices
     }
-    return render(request, 'get_cntnt/index.html', context)
+    return render(request, 'get_cntnt/home.html', context)
     
 
 def registerPage(request):
     if request.user.is_authenticated:
-        return redirect('get_cntnt:index')
+        return redirect('home')
     form = RegisterForm()
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -48,7 +46,7 @@ def registerPage(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('get_cntnt:index')
+            return redirect('home')
 
     context = {"form":form}
     return render(request, 'get_cntnt/register.html', context)
@@ -56,7 +54,7 @@ def registerPage(request):
 
 def loginPage(request):
     if request.user.is_authenticated:
-        return redirect('get_cntnt:index')
+        return redirect('home')
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -64,16 +62,15 @@ def loginPage(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('get_cntnt:index')
-        else:
-            messages.error(request,'Не правильный логин или пароль')
+            return redirect('home')
+        messages.error(request,'Не правильный логин или пароль')
 
     context = {}
     return render(request, "get_cntnt/login.html", context)
 
 def logoutUser(request):
     logout(request)
-    return redirect('get_cntnt:index')
+    return redirect('home')
 
 def favourite(request):
     if request.user.is_authenticated:
@@ -82,8 +79,7 @@ def favourite(request):
         sources = profile.love_list
         context = {"lovelist" : sources}
         return render(request, 'get_cntnt/favourite.html', context)
-    else:
-        return redirect('get_cntnt:index')
+    return redirect('home')
 
 def add_to_lovelist(request):
     source_id = request.POST.get('source_id')
@@ -100,7 +96,7 @@ def profile(request):
         form = ChangeProfileForm(instance=user, data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('get_cntnt:profile')
+            return redirect('profile')
     context = {"user" : user,
         'form':form}
     return render(request, 'get_cntnt/profile.html', context)
@@ -113,12 +109,12 @@ def profile_change(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile has been updated!')
-            return redirect('get_cntnt:profile')
+            return redirect('profile')
 
     context = {'form':form}
     return render(request, 'get_cntnt/profile_change.html', context)
 
-def change_password(request):
+def password_change(request):
     user = request.user
     form = PasswordChangeForm(user=user)
     if request.method == 'POST':
@@ -126,9 +122,9 @@ def change_password(request):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
-            return redirect('get_cntnt:change_password_done')
+            return redirect('password_change_done')
     context = {"form":form}
-    return render(request, 'get_cntnt/change_password.html', context)
+    return render(request, 'get_cntnt/password_change.html', context)
 
-def change_password_done(request):
+def password_change_done(request):
     return HttpResponse('<h1>Chnage password done</h1>')

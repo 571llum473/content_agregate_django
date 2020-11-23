@@ -17,7 +17,7 @@
                 beforeSend: function(xhr, settings) {
                     xhr.setRequestHeader("X-CSRFToken", csrftoken);
                 },
-                url:"{% url 'get_cntnt:addtolovelist' %}",
+                url:"{% url 'addtolovelist' %}",
                 data: {"source_id" : source_id},
                 type:"post",
                 success: function(data){
@@ -35,22 +35,24 @@
     <nav role="main-navigation" id = "main-nav">
         <div><img scr = {% static 'get_cntnt/logo.png' %}></div>
         <ul>
-            <form action="{% url 'get_cntnt:index' %}">
-                <input type="search" name="search">
-                <button type="submit">Search</button>
-            </form>
-            <li><a href="{% url 'get_cntnt:index' %}">Главная</a></li>
+            <li>
+                <form action="{% url 'home' %}">
+                    <input type="search" name="search">
+                    <button type="submit">Search</button>
+                </form>
+            </li>
+            <li><a href="{% url 'home' %}">Главная</a></li>
             {% if CAT_CHOICES %}
                 {% for name, desc in CAT_CHOICES.items %}
-                    <li><a href="{% url 'get_cntnt:cat' name %}">{{ desc }}</a></li>
+                    <li><a href="{% url 'cat' name %}">{{ desc }}</a></li>
                 {% endfor %}
             {% endif %}
             {% if user.is_authenticated %}
-                <li><a href="{% url 'get_cntnt:profile' %}">{{ user }}</a></li>
-                <li><a href="{% url 'get_cntnt:logout' %}">Выйти</a></li>
+                <li><a href="{% url 'profile' %}">{{ user }}</a></li>
+                <li><a href="{% url 'logout' %}">Выйти</a></li>
             {% else %}
-                <li><a href="{% url 'get_cntnt:login' %}">Войти</a></li>
-                <li><a href="{% url 'get_cntnt:register' %}">Регистрация</a></li>
+                <li><a href="{% url 'login' %}">Войти</a></li>
+                <li><a href="{% url 'register' %}">Регистрация</a></li>
             {% endif %}
         </ul>
     </nav>

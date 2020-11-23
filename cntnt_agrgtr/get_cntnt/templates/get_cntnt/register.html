@@ -1,16 +1,23 @@
 <form method="POST" action="">
     {% csrf_token %}
+    <div class="registration">
+        <h1>Зарегистрироваться</h1>
+        <p>Заполните эту форму, чтобы создать учетную запись.</p>
+        <label for="username">Логин</label>
+        <div>{{ form.username }}</div>
 
-    {% for field in form %}
-    <p>{{ field.label }}:<br>
-        {{ field }}
-    </p>
-        {% for error in field.errors %}
-        <p style="color : red">{{error}}</p>
-        {% endfor %}
-    {% endfor %} 
+        <label for="email">Email</label>
+        <div>{{ form.email }}</div>
 
-    <input type="submit" name="Create User">
+        <label for="password">Пароль</label>
+        <div>{{ form.password1 }}</div>
+
+        <label for="password-repeat">Повторите пароль</label>
+        <div>{{ form.password2 }}</div>
+
+    </div>
+
+    <button type="submit" class="registerbtn">Register</button>
 
 </form>
-<a href="{% url 'get_cntnt:login' %}">login</a>
+<a href="{% url 'login' %}">login</a>
