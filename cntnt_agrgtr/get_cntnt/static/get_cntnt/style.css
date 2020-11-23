@@ -84,3 +84,6 @@ input[name = "username"], input[name="email"]{
     cursor:pointer;
     text-decoration: underline;
 }
+.snippet{
+    display: none;
+}

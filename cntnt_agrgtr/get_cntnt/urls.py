@@ -6,7 +6,7 @@ app_name = "get_cntnt"
 urlpatterns = [
 #Home Page
     path('', views.index, name='index'),
-    path('<str:cat>', views.index, name = 'cat'),
+    path('<str:cat>', views.category, name = 'cat'),
 
 #Registration
     path('register/', views.registerPage, name='register'),
