@@ -1,8 +1,9 @@
+<h1>Зарегистрироваться</h1>
+<p>Заполните эту форму, чтобы создать учетную запись.</p>
 <form method="POST" action="">
     {% csrf_token %}
     <div class="registration">
-        <h1>Зарегистрироваться</h1>
-        <p>Заполните эту форму, чтобы создать учетную запись.</p>
+
         <label for="username">Логин</label>
         <div>{{ form.username }}</div>
 
