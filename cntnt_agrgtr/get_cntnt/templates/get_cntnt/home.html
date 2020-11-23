@@ -68,7 +68,8 @@
         {% endif %}
             <ul>
                 {% for new in news %}
-                <li class = "news-text"><a href="{{ new.url }}" onmouseover="show()" onmouseleave="hide()" class="link-with-preview" data-text="{{ new.snippet }}">{{ new.news_text }}</a><span class="newsdate">{{ new.pub_time|time }}</span></li>
+                <li class = "news-text"><a href="{{ new.url }}" class="link-with-preview">{{ new.news_text }}</a><span class="newsdate">{{ new.pub_time|time }}</span>
+                <span class = "snippet">{{ new.snippet }}</span></li>
                 {% endfor %}
             </ul>
         </div>
@@ -77,25 +78,14 @@
 {% else %}
     <p>На данный момент нет новостей.</p>
 {% endif %}
-<div class="snippet"><p></p></div>
 <script>
-    const snippet = document.querySelector(".snippet");
+    jQuery(document).ready(function(){
+        jQuery('.link-with-preview').hover(function(){
+            jQuery(this).siblings('.snippet').show()
+        }, function(){
+            jQuery(this).siblings('.snippet').hide()
+        });
 
-    const hide = () => {
-        return snippet.style.display = 'none';
-};
-
-    const show = event => {
-        const text = event.currentTarget.getAttribute("data-text");
-        snippet.querySelector('p').textContent = text;
-
-        event.currentTarget.appendChild(snippet);
-
-        return snippet.style.display = 'inline-block';
-    };
-    document.querySelectorAll(".link-with-preview").forEach(el => {
-        el.addEventListener("mouseover", show);
-        el.addEventListener("mouseleave", hide)
     });
 </script>
 </body>

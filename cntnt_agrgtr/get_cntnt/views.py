@@ -8,11 +8,8 @@ from .models import Source, Profile
 from .forms import RegisterForm, ChangeProfileForm
 
 # Create your views here.
-def homePage(request, cat=None):
-    if cat:
-        sources = Source.objects.filter(category=cat)
-    else:
-        sources = Source.objects.all()     
+def index(request):
+    sources = Source.objects.all()
     search_querry = request.GET.get('search', '')
     if search_querry:
         sources = Source.objects.filter(name__icontains=search_querry)
@@ -25,6 +22,17 @@ def homePage(request, cat=None):
         'CAT_CHOICES' : cat_choices
     }
     return render(request, 'get_cntnt/home.html', context)
+
+def category(request, cat):
+    sources = Source.objects.filter(category=cat)
+    latest_news = {i : i.news_set.order_by('-pub_time')[:5] for i in sources}
+    cat_choices = {i[0] : i[1] for i in Source.CAT_CHOICES}
+    context = {
+        'latest_news' : latest_news,
+        'CAT_CHOICES' : cat_choices
+    }
+    return render(request, 'get_cntnt/home.html', context)
+    
 
 def registerPage(request):
     if request.user.is_authenticated:
