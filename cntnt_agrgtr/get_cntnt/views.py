@@ -4,11 +4,12 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from .models import Source, Profile
 from .forms import RegisterForm, ChangeProfileForm
 
-# Create your views here.
 def index(request):
+    """Home page view with news"""
     sources = Source.objects.all()
     search_querry = request.GET.get('search', '')
     if search_querry:
@@ -24,6 +25,7 @@ def index(request):
     return render(request, 'get_cntnt/home.html', context)
 
 def category(request, cat):
+    """Categories view"""
     sources = Source.objects.filter(category=cat)
     latest_news = {i : i.news_set.order_by('-pub_time')[:5] for i in sources}
     cat_choices = {i[0] : i[1] for i in Source.CAT_CHOICES}
@@ -32,9 +34,9 @@ def category(request, cat):
         'CAT_CHOICES' : cat_choices
     }
     return render(request, 'get_cntnt/home.html', context)
-    
 
-def registerPage(request):
+def register_page(request):
+    """Registration view with custom registration form RegisterForm(forms.py)"""
     if request.user.is_authenticated:
         return redirect('home')
     form = RegisterForm()
@@ -51,45 +53,48 @@ def registerPage(request):
     context = {"form":form}
     return render(request, 'get_cntnt/register.html', context)
 
-
-def loginPage(request):
+def login_page(request):
+    """Login view"""
     if request.user.is_authenticated:
         return redirect('home')
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('profile')
         messages.error(request,'Не правильный логин или пароль')
 
     context = {}
     return render(request, "get_cntnt/login.html", context)
 
-def logoutUser(request):
+def logout_user(request):
+    """Logout user view"""
     logout(request)
     return redirect('home')
 
+@login_required
 def favourite(request):
-    if request.user.is_authenticated:
-        current_user = request.user
-        profile = Profile.objects.get(user__username=current_user)
-        sources = profile.love_list
-        context = {"lovelist" : sources}
-        return render(request, 'get_cntnt/favourite.html', context)
-    return redirect('home')
+    """Favourite news sites view"""
+    current_user = request.user
+    profile = Profile.objects.get(user__username=current_user)
+    sources = profile.love_list
+    context = {"lovelist" : sources}
+    return render(request, 'get_cntnt/favourite.html', context)
 
 def add_to_lovelist(request):
+    """Ajax button to add to favorites"""
     source_id = request.POST.get('source_id')
     current_user = request.user
     profile = Profile.objects.get(user__username=current_user)
     source = Source.objects.get(id = source_id)
     profile.love_list.add(source)
-    return(HttpResponse('succes'))
+    return HttpResponse('succes')
 
+@login_required
 def profile(request):
+    """User profile view"""
     user = request.user
     form = ChangeProfileForm(instance=user)
     if request.method == 'POST':
@@ -101,7 +106,9 @@ def profile(request):
         'form':form}
     return render(request, 'get_cntnt/profile.html', context)
 
+@login_required
 def profile_change(request):
+    """Change profile view with ChangeProfileForm(forms.py)"""
     user = request.user
     form = ChangeProfileForm(instance=user)
     if request.method == 'POST':
@@ -114,7 +121,12 @@ def profile_change(request):
     context = {'form':form}
     return render(request, 'get_cntnt/profile_change.html', context)
 
+@login_required
 def password_change(request):
+    """
+    Change password view with
+    PasswordChangeForm(from django.contrib.auth.forms import PasswordChangeForm)
+    """
     user = request.user
     form = PasswordChangeForm(user=user)
     if request.method == 'POST':
@@ -126,5 +138,7 @@ def password_change(request):
     context = {"form":form}
     return render(request, 'get_cntnt/password_change.html', context)
 
+@login_required
 def password_change_done(request):
+    """If the password change was successful"""
     return HttpResponse('<h1>Chnage password done</h1>')

@@ -8,27 +8,31 @@ urlpatterns = [
     path('<str:cat>', views.category, name = 'cat'),
 
 #Registration
-    path('register/', views.registerPage, name='register'),
-    path('login/', views.loginPage, name='login'),
-    path('logout/', views.logoutUser, name='logout'),
+    path('register/', views.register_page, name='register'),
+    path('login/', views.login_page, name='login'),
+    path('logout/', views.logout_user, name='logout'),
 
 #Password reset
     path('reset_password/',
-        auth_views.PasswordResetView.as_view(template_name="get_cntnt/password_reset.html"), 
+        auth_views.PasswordResetView.as_view(
+            template_name="get_cntnt/password_reset.html"),
         name="reset_password"),
-    
-    path('reset_password/', 
-        auth_views.PasswordResetDoneView.as_view(template_name="get_cntnt/password_reset_sent.html"), 
+
+    path('reset_password/',
+        auth_views.PasswordResetDoneView.as_view(
+            template_name="get_cntnt/password_reset_sent.html"),
         name="password_reset_done"),
-    
-    path('reset/<uidb64>/<token>/', 
-        auth_views.PasswordResetConfirmView.as_view(template_name="get_cntnt/password_reset_form.html"), 
+
+    path('reset/<uidb64>/<token>/',
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name="get_cntnt/password_reset_form.html"),
         name="password_reset_confirm"),
-    
+
     path('reset_password_complete/',
-        auth_views.PasswordResetCompleteView.as_view(template_name="get_cntnt/password_reset_done.html"), 
+        auth_views.PasswordResetCompleteView.as_view(
+            template_name="get_cntnt/password_reset_done.html"),
         name="password_reset_complete"),
-  
+
 #Profile Model
     path('favourite/', views.favourite, name='favourite'),
     path('profile/', views.profile, name='profile'),

@@ -1,6 +1,4 @@
-
-
-body{
+.home-page{
     font-family: 'HelveticaNeueCyr';
     font-style:normal;
     font-weight: 400;
@@ -15,7 +13,6 @@ a{
     text-decoration: none;
     color:black;
 }
-
 #main-nav{
     width:100%;
     display: flex;
@@ -64,7 +61,6 @@ a{
     max-width: 50%;
     padding: 1em;
 }
-
 .news-block{
     width:50%;
 }
@@ -77,13 +73,71 @@ a:hover{
 .add_to_lovelist_btn:hover{
     text-decoration: underline;
 }
-input[name = "username"], input[name="email"]{
-    display: none;
-}
 .email, .username{
     cursor:pointer;
     text-decoration: underline;
 }
+.username-change-form, .email-change-form{
+    display: none
+}
 .snippet{
     display: none;
+}
+.sign-page{
+    font-family: 'HelveticaNeueCyr';
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5em;
+    width: 30em;
+}
+.sign{
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+    padding: 2.5em;
+}
+.sign-head{
+    display: block;
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 1em;
+}
+.sign-field{
+    margin-bottom: 2em;
+}
+.sign-field-error{
+    font-size: 0.9em;
+    color: red;
+}
+.sign-field input{ 
+    width: 100%;
+    height: 2.5em;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid gray;
+}
+.sign-field input:focus{
+    transition: 0.5s;
+    border-bottom: 2px solid yellowgreen;
+}
+.sign-btn{
+    display: block;
+    width: 80%;
+    height: 2.5em;
+    margin-left: auto;
+    margin-right: auto;
+    color: black;
+    background-color: yellowgreen;
+    text-align: center;;
+    border: 1px solid gray;
+    font-size: 1em;
+}
+.sign-btn:hover{
+    transition: 0.2s;
+    background-color: rgb(123, 165, 40);
+}
+.redirect-sign-page{
+    font-size: 0.9em;
+}
+.redirect-sign-page a{
+    font-size: 0.9em;
+    color: rgb(3, 69, 192);
 }

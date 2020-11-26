@@ -1,24 +1,32 @@
-<h1>Зарегистрироваться</h1>
-<p>Заполните эту форму, чтобы создать учетную запись.</p>
-<form method="POST" action="">
-    {% csrf_token %}
-    <div class="registration">
+<head>
+    <title>Регистрация</title>
+    {% load static %}
+    <link rel="stylesheet" href = "{% static 'font/font-faces.css' %}"></link>
+    <link rel="stylesheet" href = "{% static 'get_cntnt/style.css' %}"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body class='sign-page'>
+    <div class="sign">
+        <span class="sign-head">Регистрация</span>
+        <form method="POST" action="">
+            <div class="sign-form">
+                {% csrf_token %}
+                <div class="sign-field">{{ form.username }}</div>
+                <div class="sign-field-error">{{ form.username.errors }}</div>
 
-        <label for="username">Логин</label>
-        <div>{{ form.username }}</div>
+                <div class="sign-field">{{ form.email }}</div>
+                <div class="sign-field-error">{{ form.email.errors }}</div>
 
-        <label for="email">Email</label>
-        <div>{{ form.email }}</div>
+                <div class="sign-field">{{ form.password1 }}</div>
+                <div class="sign-field-error">{{ form.password1.errors }}</div>
 
-        <label for="password">Пароль</label>
-        <div>{{ form.password1 }}</div>
+                <div class="sign-field">{{ form.password2 }}</div>
+                <div class="sign-field-error">{{ form.password2.errors }}</div>
 
-        <label for="password-repeat">Повторите пароль</label>
-        <div>{{ form.password2 }}</div>
-
+                <button type="submit" class="sign-btn">Зарегистрироваться</button>
+            </div>
+        </form>
+        <hr>
+        <div class="redirect-sign-page">Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></div>
     </div>
-
-    <button type="submit" class="registerbtn">Register</button>
-
-</form>
-<a href="{% url 'login' %}">login</a>
+</body>

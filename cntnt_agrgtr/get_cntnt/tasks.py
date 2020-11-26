@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from django.db import IntegrityError
 from get_cntnt.models import Source
 import requests
 from cntnt_agrgtr.celery import app
@@ -8,8 +9,8 @@ def scrape():
     for source_name in Source.objects.all():
         source_object = Source.objects.get(name=source_name)
         news_url = source_object.rss
-        r = requests.get(news_url)
-        soup = BeautifulSoup(r.content, 'xml')
+        xml = requests.get(news_url)
+        soup = BeautifulSoup(xml.content, 'xml')
         items = soup.find_all("item", limit=5)
 
         for tag in items:
@@ -19,11 +20,11 @@ def scrape():
             snippet = tag.description.text
             try:
                 source_object.news_set.create(
-                    news_text=news_text, 
-                    pub_time=pub_time, 
-                    snippet=snippet, 
+                    news_text=news_text,
+                    pub_time=pub_time,
+                    snippet=snippet,
                     rss=rss)
                 print('%s added' % (news_text,))
-            except: 
+            except IntegrityError:
                 print('%s already exists' % (news_text,))
-        
+  
