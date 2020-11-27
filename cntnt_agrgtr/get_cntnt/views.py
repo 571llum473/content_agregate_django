@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .models import Source, Profile
-from .forms import RegisterForm, ChangeProfileForm
+from .forms import RegisterForm, ChangeProfileForm, UserPasswordChangeForm
 
 def index(request):
     """Home page view with news"""
@@ -128,9 +128,9 @@ def password_change(request):
     PasswordChangeForm(from django.contrib.auth.forms import PasswordChangeForm)
     """
     user = request.user
-    form = PasswordChangeForm(user=user)
+    form = UserPasswordChangeForm(user=user)
     if request.method == 'POST':
-        form = PasswordChangeForm(user=user, data=request.POST)
+        form = UserPasswordChangeForm(user=user, data=request.POST)
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
@@ -140,5 +140,5 @@ def password_change(request):
 
 @login_required
 def password_change_done(request):
-    """If the password change was successful"""
-    return HttpResponse('<h1>Chnage password done</h1>')
+    context = {}
+    return render(request, 'get_cntnt/password_change_done.html', context)

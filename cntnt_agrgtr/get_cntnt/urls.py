@@ -1,5 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
+from .forms import UserPasswordResetForm, UserSetPassowrdForm
 
 from . import views
 urlpatterns = [
@@ -15,22 +16,24 @@ urlpatterns = [
 #Password reset
     path('reset_password/',
         auth_views.PasswordResetView.as_view(
-            template_name="get_cntnt/password_reset.html"),
+            template_name="get_cntnt/password_reset.html",
+            form_class=UserPasswordResetForm,),
         name="reset_password"),
 
-    path('reset_password/',
+    path('reset_password/done/',
         auth_views.PasswordResetDoneView.as_view(
-            template_name="get_cntnt/password_reset_sent.html"),
+            template_name="get_cntnt/password_reset_sent.html",),
         name="password_reset_done"),
 
     path('reset/<uidb64>/<token>/',
         auth_views.PasswordResetConfirmView.as_view(
-            template_name="get_cntnt/password_reset_form.html"),
+            template_name="get_cntnt/password_reset_form.html",
+            form_class=UserSetPassowrdForm),
         name="password_reset_confirm"),
 
-    path('reset_password_complete/',
+    path('reset_password/complete/',
         auth_views.PasswordResetCompleteView.as_view(
-            template_name="get_cntnt/password_reset_done.html"),
+            template_name="get_cntnt/password_reset_done.html",),
         name="password_reset_complete"),
 
 #Profile Model
@@ -40,9 +43,6 @@ urlpatterns = [
 
 #Password Change
     path('profile/change/password/', views.password_change, name="password_change"),
-    path('profile/change/password/done', views.password_change_done, name="password_change_done"),    
+    path('profile/change/password/done', views.password_change_done, name="password_change_done"),  
     path('profile/change/', views.profile_change, name='profile_change')
-
-
-
 ]

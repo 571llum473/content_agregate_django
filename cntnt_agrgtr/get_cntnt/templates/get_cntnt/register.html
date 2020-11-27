@@ -11,18 +11,11 @@
         <form method="POST" action="">
             <div class="sign-form">
                 {% csrf_token %}
-                <div class="sign-field">{{ form.username }}</div>
-                <div class="sign-field-error">{{ form.username.errors }}</div>
-
-                <div class="sign-field">{{ form.email }}</div>
-                <div class="sign-field-error">{{ form.email.errors }}</div>
-
-                <div class="sign-field">{{ form.password1 }}</div>
-                <div class="sign-field-error">{{ form.password1.errors }}</div>
-
-                <div class="sign-field">{{ form.password2 }}</div>
-                <div class="sign-field-error">{{ form.password2.errors }}</div>
-
+                <div class="sign-field">{{ form.username }}<span class="sign-field-error">{{ form.username.errors }}</span></div>
+                <div class="sign-field">{{ form.email }}<span class="sign-field-error">{{ form.email.errors }}</span></div>
+                <div class="sign-field">{{ form.password1 }}<span class="sign-field-error">{{ form.password1.errors }}</span></div>
+                <div class="sign-field">{{ form.password2 }}<span class="sign-field-error">{{ form.password2.errors }}</span></div>
+                
                 <button type="submit" class="sign-btn">Зарегистрироваться</button>
             </div>
         </form>

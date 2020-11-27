@@ -116,28 +116,33 @@ a:hover{
 }
 .sign-field input:focus{
     transition: 0.5s;
-    border-bottom: 2px solid yellowgreen;
+    border-bottom: 2px solid turquoise;
 }
 .sign-btn{
     display: block;
-    width: 80%;
-    height: 2.5em;
-    margin-left: auto;
+    width: 100%;
     margin-right: auto;
-    color: black;
-    background-color: yellowgreen;
-    text-align: center;;
+    margin-left: auto;
+    height: 2.5em;
+    background-color: turquoise;
+    outline: none;
     border: 1px solid gray;
     font-size: 1em;
 }
 .sign-btn:hover{
     transition: 0.2s;
-    background-color: rgb(123, 165, 40);
+    background-color: rgb(54, 187, 174)
 }
 .redirect-sign-page{
     font-size: 0.9em;
+    margin-bottom: 0.5em;
 }
 .redirect-sign-page a{
     font-size: 0.9em;
     color: rgb(3, 69, 192);
+}
+.reset-passoword{
+    font-family: 'HelveticaNeueCyr';
+    text-align: center;
+    margin-top: 5em;
 }
