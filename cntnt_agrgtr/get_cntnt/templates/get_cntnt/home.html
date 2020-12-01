@@ -33,12 +33,12 @@
 
 <header>
     <nav role="main-navigation" id = "main-nav">
-        <div><img scr = {% static 'get_cntnt/logo.png' %}></div>
+        
         <ul>
             <li>
                 <form action="{% url 'home' %}">
                     <input type="search" name="search">
-                    <button type="submit">Search</button>
+                    <button type="submit" class = "search-btn">Поиск</button>
                 </form>
             </li>
             <li><a href="{% url 'home' %}">Главная</a></li>
@@ -47,13 +47,15 @@
                     <li><a href="{% url 'cat' name %}">{{ desc }}</a></li>
                 {% endfor %}
             {% endif %}
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'profile' %}">{{ user }}</a></li>
-                <li><a href="{% url 'logout' %}">Выйти</a></li>
-            {% else %}
-                <li><a href="{% url 'login' %}">Войти</a></li>
-                <li><a href="{% url 'register' %}">Регистрация</a></li>
-            {% endif %}
+        </ul>
+        <ul class = "sign-block">
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'profile' %}">{{ user }}</a></li>
+            <li><a href="{% url 'logout' %}">Выйти</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Войти</a></li>
+            <li><a href="{% url 'register' %}">Регистрация</a></li>
+        {% endif %}
         </ul>
     </nav>
 </header>

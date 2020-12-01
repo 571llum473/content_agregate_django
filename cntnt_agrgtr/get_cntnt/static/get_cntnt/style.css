@@ -1,13 +1,20 @@
+
+*{
+    padding: 0;
+    margin:0;
+    color:#39615D;
+}
 body{
     font-family: 'HelveticaNeueCyr';
     font-style:normal;
     font-weight: 400;
-    font-size: 12px;
     margin:0;
+    font-size:12px;
 }
 ul{
     list-style: none;
     padding:0;
+    margin:0;
 }
 a{
     text-decoration: none;
@@ -17,16 +24,22 @@ a{
     width:100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    
-    border-bottom:1px solid black;
+    border-bottom:1px solid turquoise;
 }
 #main-nav ul{
     display: flex;
     flex-direction: row;
+    padding:1em 2em;    
+    justify-content: center;
+    align-items: center;
 }
+.sign-block{
+    
+    display: inline-block;
 
+}
 #main-nav ul li{
     margin-right: 2em;
 
@@ -35,7 +48,7 @@ a{
     margin-right:0;
 }
 .main{
-    padding:1em;
+    padding:2em;
     display: flex;
     flex-direction: row;
     flex-wrap:wrap;
@@ -66,6 +79,10 @@ a{
 }
 a:hover{
     text-decoration: underline;
+    color:turquoise;
+}
+.news-block h2 a{
+    color:#39615D;
 }
 .add_to_lovelist_btn{
     cursor: pointer;
@@ -77,11 +94,12 @@ a:hover{
     display: flex;
 }
 .profile-label, .profile-form{
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
 }
 .profile-box-form{
     margin-left: 0.3em;
 }
+
 .profile-form{
     width: 100%;
 }
@@ -129,7 +147,7 @@ a:hover{
     transition: 0.5s;
     border-bottom: 2px solid turquoise;
 }
-.form-btn{
+.form-btn, .search-btn{
     display: block;
     width: 100%;
     margin-right: auto;
@@ -141,7 +159,16 @@ a:hover{
     font-size: 1em;
     font-weight: bold;
 }
-.form-btn:hover{
+.form-btn{
+    margin-bottom: 0.5em;
+}
+.search-btn{
+    display: inline-block;
+    width:auto;
+    padding:0.13em 0.5em;
+    height: auto;
+}
+.form-btn:hover, .search-btn:hover{
     transition: 0.2s;
     background-color: rgb(54, 187, 174)
 }
@@ -154,7 +181,6 @@ a:hover{
     color: rgb(3, 69, 192);
 }
 .reset-passoword{
-    font-family: 'HelveticaNeueCyr';
     text-align: center;
     margin-top: 5em;
 }
