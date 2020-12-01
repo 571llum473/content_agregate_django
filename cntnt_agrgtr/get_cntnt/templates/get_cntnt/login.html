@@ -5,23 +5,23 @@
     <link rel="stylesheet" href = "{% static 'get_cntnt/style.css' %}"></link>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body class='sign-page'>
-    <div class='sign'>
-        <span class="sign-head">Войдите в свой аккаунт</span>
-        <form method="POST" action="">
-            {% csrf_token %}
-            <div class="sign-form">
+<body>
+    <div class='form-page'>
+        <div class='container-form'>
+            <span class="container-form-head">Войдите в свой аккаунт</span>
+            <form method="POST" action="">
+                {% csrf_token %}
                 {% for message in messages %}
-                <div class="sign-field-error">{{ message }}</div>
+                <div class="form-field-error">{{ message }}</div>
                 {% endfor %}
-                <div class="sign-field"><input type="text" name="username" placeholder="Введите логин"></div>
-                <div class="sign-field"><input type="password" name="password" placeholder="Введите пароль"></div>
-                <button type="submit" class="sign-btn">Войти</button>
-            </div>
-        </form>
-        <hr>
-        <div class="redirect-sign-page">У вас нет акканута? <a href="{% url 'register' %}">Регистрация</a></div>
-        <div class="redirect-sign-page"><a href="{% url 'reset_password' %}">Забыли пароль?</a></div>
+                <div class="form-field"><input type="text" name="username" placeholder="Введите логин"></div>
+                <div class="form-field"><input type="password" name="password" placeholder="Введите пароль"></div>
+                <button type="submit" class="form-btn">Войти</button>
+            </form>
+            <hr>
+            <div class="redirect-form-page">У вас нет акканута? <a href="{% url 'register' %}">Регистрация</a></div>
+            <div class="redirect-form-page"><a href="{% url 'reset_password' %}">Забыли пароль?</a></div>
+        </div>
     </div>
 </body>
 

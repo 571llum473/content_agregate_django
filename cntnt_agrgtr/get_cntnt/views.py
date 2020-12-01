@@ -90,7 +90,6 @@ def add_to_lovelist(request):
     profile = Profile.objects.get(user__username=current_user)
     source = Source.objects.get(id = source_id)
     profile.love_list.add(source)
-    return HttpResponse('succes')
 
 @login_required
 def profile(request):
@@ -123,10 +122,7 @@ def profile_change(request):
 
 @login_required
 def password_change(request):
-    """
-    Change password view with
-    PasswordChangeForm(from django.contrib.auth.forms import PasswordChangeForm)
-    """
+    """Change password view with UserPasswordChangeForm(forms.py)"""
     user = request.user
     form = UserPasswordChangeForm(user=user)
     if request.method == 'POST':

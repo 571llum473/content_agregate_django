@@ -1,9 +1,9 @@
-.home-page{
+body{
     font-family: 'HelveticaNeueCyr';
     font-style:normal;
     font-weight: 400;
+    font-size: 12px;
     margin:0;
-    font-size:12px;
 }
 ul{
     list-style: none;
@@ -73,52 +73,63 @@ a:hover{
 .add_to_lovelist_btn:hover{
     text-decoration: underline;
 }
-.email, .username{
+.profile-box{
+    display: flex;
+}
+.profile-label, .profile-form{
+    margin-bottom: 1em;
+}
+.profile-box-form{
+    margin-left: 0.3em;
+}
+.profile-form{
+    width: 100%;
+}
+.email, .username, .password{
     cursor:pointer;
-    text-decoration: underline;
 }
 .username-change-form, .email-change-form{
-    display: none
+    display: none;
 }
 .snippet{
     display: none;
 }
-.sign-page{
-    font-family: 'HelveticaNeueCyr';
+.form-page{
+    font-size: 1.3em;
     margin-left: auto;
     margin-right: auto;
     margin-top: 5em;
     width: 30em;
 }
-.sign{
+.container-form{
     box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
     padding: 2.5em;
 }
-.sign-head{
+.container-form-head{
     display: block;
     font-size: 25px;
     text-align: center;
     margin-bottom: 1em;
 }
-.sign-field{
+.form-field{
     margin-bottom: 2em;
 }
-.sign-field-error{
+.form-field-error{
     font-size: 0.9em;
     color: red;
 }
-.sign-field input{ 
+.form-field input{ 
     width: 100%;
     height: 2.5em;
     outline: none;
     border: none;
     border-bottom: 2px solid gray;
 }
-.sign-field input:focus{
+.form-field input:focus{
     transition: 0.5s;
     border-bottom: 2px solid turquoise;
 }
-.sign-btn{
+.form-btn{
     display: block;
     width: 100%;
     margin-right: auto;
@@ -128,16 +139,17 @@ a:hover{
     outline: none;
     border: 1px solid gray;
     font-size: 1em;
+    font-weight: bold;
 }
-.sign-btn:hover{
+.form-btn:hover{
     transition: 0.2s;
     background-color: rgb(54, 187, 174)
 }
-.redirect-sign-page{
+.redirect-form-page{
     font-size: 0.9em;
     margin-bottom: 0.5em;
 }
-.redirect-sign-page a{
+.redirect-form-page a{
     font-size: 0.9em;
     color: rgb(3, 69, 192);
 }

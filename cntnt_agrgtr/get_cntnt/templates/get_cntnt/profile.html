@@ -1,27 +1,41 @@
-<h2>Profile</h2>
 <head>
-    <title>Cntnt_agrgtr</title>
+    <title>Профиль</title>
     {% load static %}
     <link rel="stylesheet" href = "{% static 'font/font-faces.css' %}"></link>
     <link rel="stylesheet" href = "{% static 'get_cntnt/style.css' %}"></link>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<form method="POST">
-    {% csrf_token %}
-    <p class = "user-label">User <span class = "username">{{ user }}</span><span class="username-change-form">{{ form.username }}</span></p>
-    <p class = "email-label">Email <span class = "email">{{ user.email }}</span><span class="email-change-form">{{ form.email }}</span></p>
-    <p>Password <a href="{% url 'password_change' %}">change</a></p>
-    <input type="submit">
-</form>
+<body>
+    <div class="form-page">
+        <div class="container-form">
+            <span class="container-form-head">Профиль</span>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="profile-box">
+                    <div class="profile-box-label">
+                        <div class = "profile-label">Логин:</div>
+                        <div class = "profile-label">Почта:</div>
+                        <div class = "profile-label">Пароль:</div>
+                    </div>
+                    <div class="profile-box-form">
+                        <div class="profile-form"><span class = "username">{{ user }}</span><span class="username-change-form">{{ form.username }}</span></div>
+                        <div class="profile-form"><span class = "email">{{ user.email }}</span><span class="email-change-form">{{ form.email }}</span></div>
+                        <div class="profile-form"><a class="password" href="{% url 'password_change' %}">изменить</a></div>
+                    </div>
+                </div>
+            </form>
+            <button type="submit" class="profile-change-btn">Изменить</button>
+        </div>
+    </div>
+</body>
+
 <script>
     jQuery(document).ready(function(){
-        jQuery('.username').click(function(){
+        jQuery('.profile-change-btn').click(function(){
             jQuery('.username').hide();
-            jQuery('.username-change-form').show();
-        })
-        jQuery('.email').click(function(){
             jQuery('.email').hide();
             jQuery('.email-change-form').show();
+            jQuery('.username-change-form').show();
         })
     });
 </script>
