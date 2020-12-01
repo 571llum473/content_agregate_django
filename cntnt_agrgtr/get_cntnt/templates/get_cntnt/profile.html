@@ -8,8 +8,8 @@
 </head>
 <form method="POST">
     {% csrf_token %}
-    <p class = "user-label">User <span class = "username">{{ user }}</span>{{ form.username }}</p>
-    <p class = "email-label">Email <span class = "email">{{ user.email }}</span>{{ form.email }}</p>
+    <p class = "user-label">User <span class = "username">{{ user }}</span><span class="username-change-form">{{ form.username }}</span></p>
+    <p class = "email-label">Email <span class = "email">{{ user.email }}</span><span class="email-change-form">{{ form.email }}</span></p>
     <p>Password <a href="{% url 'password_change' %}">change</a></p>
     <input type="submit">
 </form>
@@ -17,11 +17,11 @@
     jQuery(document).ready(function(){
         jQuery('.username').click(function(){
             jQuery('.username').hide();
-            jQuery('input[name="username"]').show();
+            jQuery('.username-change-form').show();
         })
         jQuery('.email').click(function(){
             jQuery('.email').hide();
-            jQuery('input[name="email"]').show();
+            jQuery('.email-change-form').show();
         })
     });
 </script>

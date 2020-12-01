@@ -1,23 +1,25 @@
-<form method="POST" action="">
-    {% csrf_token %}
-    <div class="registration">
-        <h1>Зарегистрироваться</h1>
-        <p>Заполните эту форму, чтобы создать учетную запись.</p>
-        <label for="username">Логин</label>
-        <div>{{ form.username }}</div>
-
-        <label for="email">Email</label>
-        <div>{{ form.email }}</div>
-
-        <label for="password">Пароль</label>
-        <div>{{ form.password1 }}</div>
-
-        <label for="password-repeat">Повторите пароль</label>
-        <div>{{ form.password2 }}</div>
-
+<head>
+    <title>Регистрация</title>
+    {% load static %}
+    <link rel="stylesheet" href = "{% static 'font/font-faces.css' %}"></link>
+    <link rel="stylesheet" href = "{% static 'get_cntnt/style.css' %}"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body class='sign-page'>
+    <div class="sign">
+        <span class="sign-head">Регистрация</span>
+        <form method="POST" action="">
+            <div class="sign-form">
+                {% csrf_token %}
+                <div class="sign-field">{{ form.username }}<span class="sign-field-error">{{ form.username.errors }}</span></div>
+                <div class="sign-field">{{ form.email }}<span class="sign-field-error">{{ form.email.errors }}</span></div>
+                <div class="sign-field">{{ form.password1 }}<span class="sign-field-error">{{ form.password1.errors }}</span></div>
+                <div class="sign-field">{{ form.password2 }}<span class="sign-field-error">{{ form.password2.errors }}</span></div>
+                
+                <button type="submit" class="sign-btn">Зарегистрироваться</button>
+            </div>
+        </form>
+        <hr>
+        <div class="redirect-sign-page">Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></div>
     </div>
-
-    <button type="submit" class="registerbtn">Register</button>
-
-</form>
-<a href="{% url 'login' %}">login</a>
+</body>
