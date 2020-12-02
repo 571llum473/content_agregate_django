@@ -27,4 +27,3 @@ def scrape():
                 print('%s added' % (news_text,))
             except IntegrityError:
                 print('%s already exists' % (news_text,))
-  
